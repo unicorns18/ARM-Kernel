@@ -1,3 +1,5 @@
+// Heavily needs an optimisation. Could be written better. :)
+
 #include <stdint.h>
 
 volatile unsigned int * const UART0DR = (unsigned int *)0x101f1000;
@@ -11,17 +13,16 @@ volatile unsigned int * const UART0DR = (unsigned int *)0x101f1000;
 
 void printUART0(const char *s)
 {
-        while (*s != '\0') // Loop until end of string
+        while (*s != '\0')
         {
-                *UART0DR = (unsigned int)(*s); // transmit characters
-                s++; // next char
+                *UART0DR = (unsigned int)(*s);
+                s++;
         }
 }
 
 
 void __attribute__((interrupt)) irq_handler() 
 {
-	/* echo the received character + 1 */
  	// UART0_DR = UART0_DR + 1;
 	// printUART0("\n");
 	printUART0("IRQ received and is working :).\n");
